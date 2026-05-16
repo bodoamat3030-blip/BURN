@@ -813,7 +813,6 @@
     src="cgi.mp4"
     autoplay
     muted
-    loop
     playsinline
     webkit-playsinline
     preload="auto"
@@ -1264,6 +1263,16 @@
 
   /* ===== HERO VIDEO — MUTE TOGGLE like lusion.co ===== */
   const heroVideo  = document.getElementById('hero-video');
+  heroLoopVideo.addEventListener(
+  "timeupdate",
+  ()=>{
+
+    if(heroLoopVideo.currentTime >= 13){
+
+      heroLoopVideo.currentTime = 0;
+
+      heroLoopVideo.play();
+      
   const muteBtn    = document.getElementById('mute-btn');
   const iconSound  = document.getElementById('icon-sound');
   const iconMute   = document.getElementById('icon-mute');
