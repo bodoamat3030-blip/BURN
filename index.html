@@ -676,6 +676,82 @@
     color: rgba(255,255,255,0.2); margin-top: 16px;
   }
 
+  /* ========================= */
+/* PORTAL AUTOSCROLL VIDEO */
+/* ========================= */
+
+.portal-section{
+  position:relative;
+  height:400vh;
+}
+
+.portal-sticky{
+  position:sticky;
+  top:0;
+
+  width:100%;
+  height:100vh;
+
+  overflow:hidden;
+
+  background:#000;
+}
+
+.portal-sticky video{
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  transform:scale(1);
+
+  transition:transform 0.15s linear;
+}
+
+.portal-overlay{
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 0%,
+      rgba(0,0,0,0.1) 30%,
+      rgba(0,0,0,0.92) 100%
+    );
+}
+
+.portal-text{
+  position:absolute;
+
+  bottom:80px;
+  left:8vw;
+
+  z-index:5;
+}
+
+.portal-text h2{
+  font-family:'Bebas Neue',sans-serif;
+
+  font-size:90px;
+
+  letter-spacing:3px;
+
+  color:white;
+}
+
+.portal-text p{
+  margin-top:10px;
+
+  color:rgba(255,255,255,0.6);
+
+  letter-spacing:2px;
+
+  text-transform:uppercase;
+
+  font-size:11px;
+}
+
   /* ============ MOBILE ============ */
   @media (max-width: 768px) {
     nav { padding: 20px 24px; }
@@ -739,16 +815,19 @@
 <section id="hero">
   <!-- VIDEO BACKGROUND — autoplay fullscreen like lusion.co -->
   <div class="hero-video-bg">
-    <video
-      id="hero-video"
-      src="cgi.mp4"
-      autoplay
-      muted
-      loop
-      playsinline
-      webkit-playsinline
-      preload="auto"
-    ></video>
+
+  <!-- VIDEO INTRO 0-13 DETIK LOOP -->
+  <video
+    id="hero-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    webkit-playsinline
+    preload="auto"
+  >
+    <source src="cgi.mp4" type="video/mp4">
+  </video>
   </div>
 
   <div class="scanlines" style="z-index:2;position:absolute;inset:0;"></div>
@@ -783,6 +862,36 @@
     <span>Scroll to explore</span>
     <div class="hero-scroll-badge-line"></div>
   </div>
+</section>
+
+<!-- PORTAL SCROLL SECTION -->
+<section class="portal-section">
+
+  <div class="portal-sticky">
+
+    <video
+      id="portal-video"
+      muted
+      playsinline
+      preload="auto"
+    >
+      <source src="cgi.mp4" type="video/mp4">
+    </video>
+
+    <div class="portal-overlay"></div>
+
+    <div class="portal-text">
+
+      <h2>ENTER</h2>
+
+      <p>
+        Scroll to dive into the digital world
+      </p>
+
+    </div>
+
+  </div>
+
 </section>
 
 <!-- MARQUEE -->
@@ -1181,6 +1290,62 @@
   heroVideo.addEventListener('canplay', () => {
     heroVideo.play().catch(() => {});
   });
+ });
+  
+  /* ========================= */
+/* PORTAL VIDEO AUTOSCROLL */
+/* ========================= */
+
+const portalSection =
+  document.querySelector(".portal-section");
+
+const portalVideo =
+  document.getElementById("portal-video");
+
+window.addEventListener("scroll",()=>{
+
+  const rect =
+    portalSection.getBoundingClientRect();
+
+  const total =
+    portalSection.offsetHeight -
+    window.innerHeight;
+
+  let progress =
+    -rect.top / total;
+
+  progress = Math.max(
+    0,
+    Math.min(progress,1)
+  );
+
+  /* VIDEO SCRUB */
+
+  if(portalVideo.duration){
+
+    portalVideo.currentTime =
+      portalVideo.duration * progress;
+
+  }
+
+  /* ZOOM EFFECT */
+
+  const scale =
+    1 + (progress * 2);
+
+  portalVideo.style.transform =
+    `scale(${scale})`;
+
+});
+
+portalVideo.addEventListener(
+  "loadedmetadata",
+  ()=>{
+
+    portalVideo.pause();
+
+  }
+);
 </script>
 </body>
 </html>
