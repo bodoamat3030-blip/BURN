@@ -98,6 +98,49 @@
   }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
 
+  /* ============ SL ============ */
+  sl {
+    position: fixed; top: 0; left: 28px; right: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px 48px;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(5,5,10,0.9) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  sl.visible { opacity: 1; }
+  .sl-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 6px;
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+  }
+  .sl-logo::after {
+    content: '龍';
+    position: absolute; top: -4px; right: -24px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 12px; color: var(--blood);
+    opacity: 0.8;
+  }
+  .sl-links { display: flex; gap: 40px; list-style: none; }
+  .sl-links a {
+    text-decoration: none; color: rgba(255,255,255,0.5);
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .sl-links a:hover { color: #fff; }
+  .sl-status {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--sakura); display: flex; align-items: center; gap: 8px;
+  }
+  .status-dot {
+    width: 6px; height: 6px; background: var(--sakura);
+    border-radius: 50%; animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+
   /* ============ PORTAL / INTRO OVERLAY ============ */
   /* This is the lusion.co-style portal: fullscreen video that zooms into the page */
   #portal-overlay {
@@ -905,12 +948,17 @@
   <div class="nav-status">
     <span class="status-dot"></span>
     Available for work
-  <div class="socials-div">
+  </div>
+</nav>
+  
+<!-- SL -->
+<sl id="main-sl">
+  <div class="socials-sl">
   <a href="https://github.com/marsuki" target="_blank" class="sf-link">GitHub</a>
   <a href="https://tiktok.com/@markeyyy_s" target="_blank" class="sf-link">TikTok</a>
   <a href="https://instagram.com/marsukiII_596" target="_blank" class="sf-link">Instagram</a>
   </div>
-  </nav>
+  </sl>
   
 <!-- MUTE BUTTON -->
 <button id="mute-btn" aria-label="Toggle mute">
